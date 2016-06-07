@@ -1,0 +1,58 @@
+apply plugin: 'maven'  
+apply plugin: 'java'  
+apply plugin: 'eclipse-wtp'  
+
+
+
+task releaseJar(type:Jar) {  
+    from('build/classes/main/')
+    exclude('build/classes/main/Zeson/AZLRJ/example/')
+    destinationDir = file('build/libs')  
+}  
+ 
+// 全局属性设置
+ext {
+
+   
+    slf4jVersion = "1.7.7"
+    log4jVersion = "1.2.17"
+    junitVersion = "4.11"
+   
+    
+    
+    // java文件编码方式设置为utf-8
+    compileJava.options.encoding = 'UTF-8'
+    compileTestJava.options.encoding = 'UTF-8'
+  }
+
+
+
+// 设置 maven 库地址
+repositories {  
+	mavenLocal()
+    mavenCentral() // 中央库
+    
+}
+ 
+ 
+// 设置依赖
+dependencies {
+    compile(
+    	
+        
+        //log
+        "log4j:log4j:${log4jVersion}",
+        
+        "org.slf4j:slf4j-api:${slf4jVersion}",
+        "org.slf4j:slf4j-log4j12:${slf4jVersion}",
+        
+        
+        //JSON
+       "com.alibaba:fastjson:1.1.41",
+       "junit:junit:${junitVersion}"
+      )
+ 
+}
+ 
+ 
+

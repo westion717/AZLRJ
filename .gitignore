@@ -1,0 +1,8 @@
+bin/
+/build/
+*.swp
+*.DS_Store
+.*
+!.gitignore
+/build/
+/build/
