@@ -8,7 +8,6 @@ import Zeson.AZLRJ.parsec.AndParsec;
 import Zeson.AZLRJ.parsec.ClosureOrPlusParsec;
 import Zeson.AZLRJ.parsec.InCharsParsec;
 import Zeson.AZLRJ.parsec.WordParsec;
-import Zeson.AZLRJ.parsec.action.ParsecCharSemanticAction;
 import Zeson.AZLRJ.parsec.action.ParsecLiteralSemanticAction;
 import Zeson.AZLRJ.parsec.action.ParsecObjectsSemanticAction;
 
@@ -16,25 +15,23 @@ public class WordBuilder {
 
 	private char CR;
 
-	private InCharsParsec inCharsParsec = new InCharsParsec(
-			new ParsecCharSemanticAction() {
+	private InCharsParsec whiteCharParsec = new InCharsParsec(
+			new ParsecLiteralSemanticAction() {
 
 				@Override
-				public Object doAction(char character, Source source) {
-
-					if (character == CR) {
+				public Object doAction(String word, Source source) {
+					if (word.equals(CR + "")) {
 						source.line += 1;
 						source.column = 1;
 					} else {
 						source.column += 1;
 					}
-
 					return null;
 				}
 			});
 
 	private ClosureOrPlusParsec whiteSpace = new ClosureOrPlusParsec(
-			inCharsParsec, false);
+			whiteCharParsec, false);
 
 	private WordBuilder() {
 
@@ -73,7 +70,7 @@ public class WordBuilder {
 
 	public AbstractParsec getWhiteParsec() {
 
-		return inCharsParsec;
+		return whiteCharParsec;
 	}
 
 	public static WordBuilder get(char CR, Character... whiteStrs) {
@@ -81,10 +78,10 @@ public class WordBuilder {
 		final WordBuilder wb = new WordBuilder();
 
 		wb.CR = CR;
-		wb.inCharsParsec.addChars(CR);
+		wb.whiteCharParsec.addChars(CR);
 
 		for (Character c : whiteStrs) {
-			wb.inCharsParsec.addChars(c);
+			wb.whiteCharParsec.addChars(c);
 
 		}
 

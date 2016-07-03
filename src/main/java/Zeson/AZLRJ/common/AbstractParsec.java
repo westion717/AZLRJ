@@ -15,10 +15,15 @@ public abstract class AbstractParsec implements IParsec {
 
 		int pos = inputString.pos;
 
-		if (isMemoization && memoizationTable.get(this, pos) != null)
-			return memoizationTable.get(this, pos);
+		if (isMemoization) {
+			ParsedResult storedResult = memoizationTable.get(this, pos);
+			if (storedResult != null) {
+				return storedResult;
+			}
+		}
 
 		Source dup = inputString.fork();
+
 		ParsedResult result = this.internalParse(dup);
 		if (result.getClass() == FailedResult.class) {
 
@@ -26,10 +31,16 @@ public abstract class AbstractParsec implements IParsec {
 				handler.failHandle((FailedResult) result);
 			}
 		} else {
-			if (isMemoization) {
-				memoizationTable.put(this, pos, result);
+			/*try {
+				Thread.sleep(0,1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
+		}
+		if (isMemoization) {
+			memoizationTable.put(this, pos, result);
 
-			}
 		}
 		return result;
 	}

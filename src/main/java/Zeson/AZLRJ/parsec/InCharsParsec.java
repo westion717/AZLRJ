@@ -11,15 +11,15 @@ import Zeson.AZLRJ.common.FailedResult;
 import Zeson.AZLRJ.common.ParsedResult;
 import Zeson.AZLRJ.common.SuccessResult;
 import Zeson.AZLRJ.common.Source;
-import Zeson.AZLRJ.parsec.action.ParsecCharSemanticAction;
+import Zeson.AZLRJ.parsec.action.ParsecLiteralSemanticAction;
 
 public final class InCharsParsec extends AbstractParsec {
 
-	private ParsecCharSemanticAction charSemanticAction;
+	private ParsecLiteralSemanticAction charSemanticAction;
 
 	private Set<Character> chars = new HashSet<Character>();
 
-	public InCharsParsec(ParsecCharSemanticAction charSemanticAction,
+	public InCharsParsec(ParsecLiteralSemanticAction charSemanticAction,
 			char... charas) {
 		super();
 		this.charSemanticAction = charSemanticAction;
@@ -59,8 +59,8 @@ public final class InCharsParsec extends AbstractParsec {
 		SuccessResult parsedResult = new SuccessResult(null, inputString);
 
 		if (this.charSemanticAction != null) {
-			parsedResult.setResultObject(this.charSemanticAction.doAction(c,
-					inputString));
+			parsedResult.setResultObject(this.charSemanticAction.doAction(c
+					+ "", inputString));
 		}
 		inputString.peek(1);
 		return parsedResult;

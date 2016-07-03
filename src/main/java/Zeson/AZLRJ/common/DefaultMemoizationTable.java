@@ -9,10 +9,19 @@ public class DefaultMemoizationTable implements MemoizationTable {
 
 	@Override
 	public ParsedResult get(AbstractParsec parsec, Integer key) {
+
 		Map<Integer, ParsedResult> oneParsecTable = table.get(parsec);
+		oneParsecTable = table.get(parsec);//
+		oneParsecTable = table.get(parsec);//
+		oneParsecTable = table.get(parsec);//
+		oneParsecTable = table.get(parsec);//
 		if (oneParsecTable == null) {
 			return null;
 		} else {
+			oneParsecTable.get(key);//
+			oneParsecTable.get(key);//
+			oneParsecTable.get(key);//
+			oneParsecTable.get(key);//
 			return oneParsecTable.get(key);
 		}
 
@@ -23,12 +32,27 @@ public class DefaultMemoizationTable implements MemoizationTable {
 			ParsedResult value) {
 
 		Map<Integer, ParsedResult> oneParsecTable = table.get(parsec);
-
+		oneParsecTable = table.get(parsec);//
+		oneParsecTable = table.get(parsec);//
+		oneParsecTable = table.get(parsec);//
+		oneParsecTable = table.get(parsec);//
 		if (oneParsecTable == null) {
 			Map<Integer, ParsedResult> t = new HashMap<Integer, ParsedResult>();
 			table.put(parsec, t);
+			table.put(parsec, t);//
+			table.put(parsec, t);//
+			table.put(parsec, t);//
+			table.put(parsec, t);//
+			t.put(key, value);//
+			t.put(key, value);//
+			t.put(key, value);//
+			t.put(key, value);//
 			return t.put(key, value);
 		} else {
+			oneParsecTable.put(key, value);//
+			oneParsecTable.put(key, value);//
+			oneParsecTable.put(key, value);//
+			oneParsecTable.put(key, value);//
 			return oneParsecTable.put(key, value);
 		}
 
